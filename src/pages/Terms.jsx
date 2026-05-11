@@ -42,7 +42,7 @@ export default function Terms() {
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">5. Intellectual Property</h2>
               <ul className="list-disc list-inside text-blue-100 space-y-2 text-xs md:text-sm">
-                <li>All content, trademarks, and data on the app are owned by Awadh Info Solution Pvt Ltd or its licensors. Visit our website: <a href="https://awadhinfosolution.in" className="underline text-yellow-300" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a></li>
+                <li>All content, trademarks, and data on the app are owned by Awadh Info Solution Pvt Ltd or its licensors. Visit our website: <a href="https://www.awadhinfosolution.in" className="underline text-yellow-300" target="_blank" rel="noopener noreferrer">www.awadhinfosolution.in</a></li>
                 <li>You may not copy, modify, or distribute any part of the app without permission.</li>
               </ul>
             </div>
@@ -73,7 +73,7 @@ export default function Terms() {
             {/* Section 10 */}
             <div className="mb-8 pb-8 border-b border-blue-400 border-opacity-30">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">10. Contact Us</h2>
-              <p className="text-blue-100 text-sm md:text-base">If you have any questions about these Terms, contact us at <a href="mailto:support@awadhinfosolution.in" className="underline text-yellow-300">support@awadhinfosolution.in</a> or call <a href="tel:+919348381179" className="underline text-yellow-300">+91-9348381179</a>. Visit our website: <a href="https://awadhinfosolution.in" className="underline text-yellow-300" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a>.</p>
+              <p className="text-blue-100 text-sm md:text-base">If you have any questions about these Terms, contact us at <a href="mailto:support@awadhinfosolution.in" className="underline text-yellow-300">support@awadhinfosolution.in</a> or call <a href="tel:+919348381179" className="underline text-yellow-300">+91-9348381179</a>. Visit our website: <a href="https://www.awadhinfosolution.in" className="underline text-yellow-300" target="_blank" rel="noopener noreferrer">www.awadhinfosolution.in</a>.</p>
             </div>
             {/* Footer */}
             <div className="text-center text-blue-200 text-xs pt-4">

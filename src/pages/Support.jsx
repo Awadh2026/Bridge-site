@@ -27,7 +27,7 @@ export default function Support() {
                   <span className="font-semibold text-yellow-300">Phone:</span> +91-9348381179
                 </li>
                 <li>
-                  <span className="font-semibold text-yellow-300">Website:</span> <a href="https://awadhinfosolution.in" className="underline text-blue-200 hover:text-yellow-300" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a>
+                  <span className="font-semibold text-yellow-300">Website:</span> <a href="https://www.awadhinfosolution.in" className="underline text-blue-200 hover:text-yellow-300" target="_blank" rel="noopener noreferrer">www.awadhinfosolution.in</a>
                 </li>
               </ul>
             </div>

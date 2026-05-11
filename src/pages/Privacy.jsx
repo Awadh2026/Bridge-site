@@ -159,7 +159,7 @@ export default function Privacy() {
               <div className="bg-blue-800 bg-opacity-50 border-l-4 border-yellow-400 p-4 rounded">
                 <p className="font-semibold text-white mb-3 text-sm md:text-base">Awadh Info Solution Pvt Ltd</p>
                 <p className="text-blue-100 mb-2 text-xs md:text-sm">📧 <span className="text-yellow-300">support@awadhinfosolution.in</span></p>
-                <p className="text-blue-100 mb-2 text-xs md:text-sm">🌐 <span className="text-yellow-300">awadhinfosolution.in</span></p>
+                <p className="text-blue-100 mb-2 text-xs md:text-sm">🌐 <span className="text-yellow-300">www.awadhinfosolution.in</span></p>
                 <p className="text-blue-200 text-xs">⏱️ Response time: Within 30 days</p>
               </div>
             </div>

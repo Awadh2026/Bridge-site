@@ -16,6 +16,9 @@ export default function Header() {
           <Link to="/privacy" className="hover:text-gray-200">
             Privacy
           </Link>
+          <Link to="/terms" className="hover:text-gray-200">
+            Terms & Conditions
+          </Link>
           <Link to="/support" className="hover:text-gray-200">
             Support
           </Link>

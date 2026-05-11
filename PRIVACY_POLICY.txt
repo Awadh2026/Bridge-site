@@ -1,0 +1,154 @@
+PRIVACY POLICY FOR ZINGERR APP
+
+Last Updated: May 11, 2026
+
+1. INTRODUCTION
+
+Awadh Info Solution Pvt Ltd ("Company," "we," "us," or "our") operates the Zingerr mobile application ("App"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our App. Please read this Privacy Policy carefully before using the App.
+
+2. INFORMATION WE COLLECT
+
+2.1 INFORMATION YOU PROVIDE DIRECTLY
+
+Phone Number and OTP Authentication:
+- We collect your phone number to send you One-Time Passwords (OTPs) for authentication and account verification
+- OTPs are temporary codes used to verify your identity and secure your account
+- Your phone number is required for account creation and login
+
+Account Information:
+- Name
+- Email address
+- Profile picture (optional)
+- Address and location information (optional)
+
+Communication Data:
+- Messages, feedback, and support requests you send to us
+
+2.2 INFORMATION COLLECTED AUTOMATICALLY
+
+Device Information:
+- Device type, model, and operating system
+- Device identifiers
+- Mobile network information
+- Device settings
+
+Usage Information:
+- Pages and features accessed
+- Time and duration of activities
+- Crash reports and error logs
+- Performance metrics
+
+Location Information:
+- GPS location data (with your permission)
+- General location based on IP address
+
+3. HOW WE USE YOUR INFORMATION
+
+We use your information for:
+- Authentication and account security via OTP verification
+- Delivering and improving the App services
+- Sending updates, notifications, and support messages
+- Understanding user behavior and enhancing user experience
+- Complying with legal obligations
+- Preventing fraud and ensuring security
+- Providing customer support
+- Personalizing content and recommendations
+
+4. OTP (ONE-TIME PASSWORD) POLICY
+
+OTP Collection and Use:
+- OTPs are sent to your registered phone number for authentication only
+- OTPs expire automatically (typically within 10 minutes)
+- You will not be charged for OTPs; however, your carrier's standard messaging rates may apply
+
+OTP Security:
+- OTPs are encrypted and securely transmitted
+- Never share your OTP with anyone
+- We never ask for OTPs via email or phone calls
+
+OTP Data Retention:
+- OTP records are retained for 90 days for security and compliance
+- After this period, records are securely deleted
+
+5. SHARING OF YOUR INFORMATION
+
+We do NOT sell, trade, or rent your personal information. We may share information in these limited cases:
+- With SMS and cloud service providers (under confidentiality agreements)
+- When required by law or legal process
+- In case of business transfers, mergers, or bankruptcy
+- With your explicit consent
+
+6. DATA SECURITY
+
+We implement security measures including:
+- SSL/TLS encryption for data transmission
+- Encrypted storage for sensitive information
+- Access controls and limited permissions
+- Regular security audits and testing
+- Secure deletion of data when no longer needed
+
+7. YOUR PRIVACY RIGHTS
+
+You have the right to:
+- Access a copy of your personal data
+- Update or correct inaccurate information
+- Request deletion of your data
+- Withdraw consent for data processing
+- Receive your data in portable format
+
+Contact: support@awadhinfosolution.in to exercise these rights.
+
+8. DATA RETENTION PERIODS
+
+- OTP Records: 90 days for security purposes
+- Account Data: Until account deletion
+- Communication Records: 2 years or as required by law
+- Marketing Data: Until you unsubscribe
+- Post-Deletion: Data securely deleted within 30 days
+
+9. CHILDREN'S PRIVACY
+
+The App is not intended for users under 13 years old. We do not knowingly collect personal information from children under 13. If discovered, such information will be deleted promptly.
+
+10. THIRD-PARTY LINKS AND SERVICES
+
+The App may contain links to third-party websites and services. This Privacy Policy does not apply to third-party services. Please review their privacy policies separately.
+
+11. UPDATES TO THIS PRIVACY POLICY
+
+We may update this Privacy Policy periodically. Significant changes will be communicated through the App. Continued use after updates constitutes acceptance of the new policy.
+
+12. EU/GDPR COMPLIANCE
+
+For EU residents:
+- Legal Basis: Your consent and legitimate business interests
+- Data Controller: Awadh Info Solution Pvt Ltd
+- Rights: Access, rectification, erasure, and data portability
+- Complaint: Contact your local data protection authority
+
+13. CALIFORNIA PRIVACY RIGHTS (CCPA)
+
+California residents have additional rights:
+- Right to know what personal information is collected and used
+- Right to delete personal information
+- Right to opt-out of information sharing
+
+14. CONTACT US FOR PRIVACY INQUIRIES
+
+Awadh Info Solution Pvt Ltd
+Email: support@awadhinfosolution.in
+Website: awadhinfosolution.in
+Support: Use the in-app support feature
+
+We respond to privacy inquiries within 30 days.
+
+15. DISCLAIMER
+
+This Privacy Policy is provided as-is. While we protect your information, we cannot guarantee complete security. Use of the App is at your own risk.
+
+ACKNOWLEDGMENT AND CONSENT
+
+By downloading and using the Zingerr App, you acknowledge that you have read and agree to this Privacy Policy.
+
+Last Updated: May 11, 2026
+Version: 1.0

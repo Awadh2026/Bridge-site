@@ -10,7 +10,7 @@ export default function Navbar() {
 
       <div className="space-x-6">
         <Link to="/">Home</Link>
-        {/* <Link to="/support">Support</Link> */}
+        <Link to="/support">Support</Link>
         <Link to="/privacy">Privacy</Link>
 
         <button className="bg-pink-500 px-5 py-2 rounded-full">

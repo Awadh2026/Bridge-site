@@ -47,9 +47,6 @@ export default function Navbar() {
         <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
         <Link to="/privacy" onClick={() => setMenuOpen(false)}>Privacy</Link>
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link>
-        <button className="bg-pink-500 px-5 py-2 rounded-full" onClick={() => setMenuOpen(false)}>
-          Work With Us
-        </button>
       </div>
     </nav>
   );

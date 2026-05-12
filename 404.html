@@ -1,19 +1,17 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>awadhinfosolution</title>
-  </head>
-  <body>
-    <div id="root"></div>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+
     <script>
-      // SPA Fallback: rewrite URL and load app without redirect
-      if (location.pathname !== '/' && !location.pathname.endsWith('/index.html')) {
-        history.replaceState(null, '', location.pathname + location.search + location.hash);
-      }
+      sessionStorage.redirect = location.href;
     </script>
-    <script type="module" src="/src/main.jsx"></script>
+
+    <meta http-equiv="refresh" content="0;URL='/'" />
+  </head>
+
+  <body>
+    Redirecting...
   </body>
 </html>

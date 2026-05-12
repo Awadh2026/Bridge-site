@@ -9,11 +9,9 @@
   <body>
     <div id="root"></div>
     <script>
-      // Redirect all 404s to index.html for SPA routing
-      var redirectTo = '/index.html';
-      var l = window.location;
-      if (l.pathname !== '/' && !l.pathname.endsWith('/index.html')) {
-        window.location.replace(redirectTo + l.search + l.hash);
+      // SPA Fallback: rewrite URL and load app without redirect
+      if (location.pathname !== '/' && !location.pathname.endsWith('/index.html')) {
+        history.replaceState(null, '', location.pathname + location.search + location.hash);
       }
     </script>
     <script type="module" src="/src/main.jsx"></script>

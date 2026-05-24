@@ -32,9 +32,10 @@ export default function Navbar() {
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-6 items-center">
         <Link to="/">Home</Link>
-        <Link to="/support">Support</Link>
         <Link to="/privacy">Privacy</Link>
         <Link to="/terms">Terms & Conditions</Link>
+        <Link to="/refund-policy">Refund Policy</Link>
+        <Link to="/support">Support</Link>
       </div>
 
       {/* Mobile Menu */}
@@ -47,6 +48,7 @@ export default function Navbar() {
         <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
         <Link to="/privacy" onClick={() => setMenuOpen(false)}>Privacy</Link>
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link>
+        <Link to="/refund-policy" onClick={() => setMenuOpen(false)}>Refund Policy</Link>
       </div>
     </nav>
   );

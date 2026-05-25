@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import zingerrLogo from "../assets/zingerr.png";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <nav className="bg-gradient-to-r from-blue-700 to-indigo-900 text-white px-6 py-5 flex items-center justify-between relative">
-      <h1 className="text-xl font-bold z-20">Zingerr</h1>
+    <nav className="bg-app-bg text-app-header px-6 py-5 flex items-center justify-between relative border-b-4 border-app-accent">
+      <Link to="/" className="z-20 shrink-0">
+        <img
+          src={zingerrLogo}
+          alt="ZINGERR — Fresh Zing at Door"
+          className="h-16 md:h-[4.5rem] w-auto object-contain"
+        />
+      </Link>
 
       {/* Hamburger Icon */}
       <button
@@ -30,17 +37,17 @@ export default function Navbar() {
       </button>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex space-x-6 items-center">
-        <Link to="/">Home</Link>
-        <Link to="/privacy">Privacy</Link>
-        <Link to="/terms">Terms & Conditions</Link>
-        <Link to="/refund-policy">Refund Policy</Link>
-        <Link to="/support">Support</Link>
+      <div className="hidden md:flex space-x-6 items-center font-medium">
+        <Link to="/" className="hover:text-app-accent transition">Home</Link>
+        <Link to="/privacy" className="hover:text-app-accent transition">Privacy</Link>
+        <Link to="/terms" className="hover:text-app-accent transition">Terms & Conditions</Link>
+        <Link to="/refund-policy" className="hover:text-app-accent transition">Refund Policy</Link>
+        <Link to="/support" className="hover:text-app-accent transition">Support</Link>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-blue-900 bg-opacity-95 flex flex-col items-center justify-center space-y-8 text-xl transition-all duration-300 md:hidden z-10 ${
+        className={`fixed inset-0 bg-app-bg-muted text-app-header flex flex-col items-center justify-center space-y-8 text-xl transition-all duration-300 md:hidden z-10 border-l-4 border-app-accent ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >

@@ -10,7 +10,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 
 export default function App() {
   return (
-    <>
+    <div className="min-h-screen bg-app-bg text-app-body flex flex-col">
       <Navbar />
 
       <Routes>
@@ -22,6 +22,6 @@ export default function App() {
       </Routes>
 
       <Footer />
-    </>
+    </div>
   );
 }

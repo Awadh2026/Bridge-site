@@ -1,19 +1,19 @@
 export default function Footer() {
   return (
-    <footer className="bg-blue-600 text-white py-6">
+    <footer className="bg-app-bg text-app-header py-6 border-t-4 border-app-accent">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-8">
         <div>
           <p className="text-lg font-semibold">© 2026 Awadh Info Solution Pvt Ltd</p>
-          <p className="text-sm text-blue-100/90">Connect with us on social and app stores.</p>
+          <p className="text-sm text-app-body">Connect with us on social and app stores.</p>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a
-            href="https://www.instagram.com/awadhinfosolution/"
+            href="https://www.instagram.com/zingerr2026?igsh=MWVxczRxN2IzcTlyOA== "
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Awadh Info Solution on Instagram"
-            className="flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 hover:bg-blue-400 transition"
+            className="flex items-center gap-2 rounded-full bg-white border border-app-accent/30 px-4 py-2 hover:border-app-accent transition text-app-body"
           >
             <span className="w-5 h-5 text-[#E1306C]">
               <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor" aria-hidden="true">
@@ -23,11 +23,11 @@ export default function Footer() {
             <span>Instagram</span>
           </a>
           <a
-            href="https://twitter.com/awadhinfo"
+            href="https://x.com/zingerr2026?s=11"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Awadh Info Solution on Twitter"
-            className="flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 hover:bg-blue-400 transition"
+            className="flex items-center gap-2 rounded-full bg-white border border-app-accent/30 px-4 py-2 hover:border-app-accent transition text-app-body"
           >
             <span className="w-5 h-5 text-[#1DA1F2]">
               <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor" aria-hidden="true">
@@ -41,7 +41,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Awadh Info Solution on Google Play Store"
-            className="flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 hover:bg-blue-400 transition"
+            className="flex items-center gap-2 rounded-full bg-white border border-app-accent/30 px-4 py-2 hover:border-app-accent transition text-app-body"
           >
             <span className="w-5 h-5 text-[#34A853]">
               <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor" aria-hidden="true">
@@ -55,7 +55,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Awadh Info Solution on LinkedIn"
-            className="flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 hover:bg-blue-400 transition"
+            className="flex items-center gap-2 rounded-full bg-white border border-app-accent/30 px-4 py-2 hover:border-app-accent transition text-app-body"
           >
             <span className="w-5 h-5 text-[#0A66C2]">
               <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor" aria-hidden="true">

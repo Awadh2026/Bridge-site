@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@theme {
+  --color-app-bg: #f1faf5;
+  --color-app-bg-muted: #e3f2ec;
+  --color-app-header: #004d40;
+  --color-app-accent: #00c853;
+  --color-app-body: #2d3748;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: var(--color-app-bg);
+  color: var(--color-app-body);
+}

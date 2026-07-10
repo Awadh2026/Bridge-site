@@ -6,12 +6,12 @@ export default function Privacy() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-app-header">Privacy Policy</h1>
           <p className="text-base md:text-lg text-app-body mb-8">
-            Your privacy is important to us. Learn how Zingerr protects your personal information and data.
+            Your privacy matters. This policy explains what information the Zingerr app collects, how it is used, and the choices available to you.
           </p>
           <div className="flex gap-3 md:gap-6 mb-8 text-xs md:text-sm opacity-90 flex-wrap">
-            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">🔒 Data Protected</span>
-            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">🛡️ Secure OTP</span>
-            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">✅ GDPR Compliant</span>
+            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">🔒 Secure Data Handling</span>
+            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">🛡️ OTP Protection</span>
+            <span className="bg-white border border-app-accent/30 px-3 py-2 rounded-full text-app-header">✅ Clear Privacy Choices</span>
           </div>
 
           {/* BLUE SCREEN CONTENT BOX */}
@@ -20,10 +20,10 @@ export default function Privacy() {
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-app-header mb-4">1. Introduction</h2>
               <p className="text-app-body leading-relaxed text-sm md:text-base">
-                Awadh Info Solution Pvt Ltd ("Company," "we," "us," or "our") operates the Zingerr mobile application ("App"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our App.
+                Awadh Info Solution Pvt Ltd ("Company," "we," "us," or "our") operates the Zingerr mobile application ("App"). This Privacy Policy explains how we collect, use, share, and safeguard your information when you use the App.
               </p>
               <p className="text-app-body leading-relaxed mt-3 text-sm md:text-base">
-                Please read this Privacy Policy carefully. If you do not agree with our policies and practices, please do not use our App.
+                Please read this Privacy Policy carefully. By using the App, you agree to the practices described here. If you do not agree, please stop using the App.
               </p>
             </div>
 
@@ -88,7 +88,7 @@ export default function Privacy() {
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-app-header mb-4">5. Sharing of Information</h2>
               <p className="text-red-700 font-semibold text-sm md:text-base mb-3">⚠️ We do NOT sell, trade, or rent your personal information.</p>
-              <p className="text-app-body mb-3 text-xs md:text-sm">We may share information only in these cases:</p>
+              <p className="text-app-body mb-3 text-xs md:text-sm">We only share information when it is necessary to provide the App, protect legal rights, or comply with applicable law.</p>
               <ul className="space-y-2 text-app-body text-xs md:text-sm">
                 <li>🔗 <strong>Third-Party Service Providers:</strong> SMS & cloud services</li>
                 <li>⚖️ <strong>Legal Requirements:</strong> When required by law</li>
@@ -100,7 +100,7 @@ export default function Privacy() {
             {/* Section 6 */}
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-app-header mb-4">6. Data Security</h2>
-              <p className="text-app-body mb-3 text-xs md:text-sm">We implement comprehensive security measures:</p>
+              <p className="text-app-body mb-3 text-xs md:text-sm">We use reasonable technical and organizational safeguards to protect your information:</p>
               <ul className="space-y-2 text-app-body text-xs md:text-sm">
                 <li>🔐 <strong>SSL/TLS Encryption:</strong> For data in transit</li>
                 <li>🔒 <strong>Encrypted Storage:</strong> For sensitive data</li>
@@ -150,7 +150,7 @@ export default function Privacy() {
 
             <div className="mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-app-header mb-4">10. Third-Party Links</h2>
-              <p className="text-app-body text-xs md:text-sm">App may contain third-party links. We're not responsible for their privacy practices.</p>
+              <p className="text-app-body text-xs md:text-sm">The App may contain links to third-party services. We are not responsible for the privacy practices of those third parties.</p>
             </div>
 
             {/* Section 13 */}
@@ -177,7 +177,7 @@ export default function Privacy() {
 
             {/* Footer */}
             <div className="text-center text-app-body text-xs pt-4">
-              <p><strong>Last Updated:</strong> May 11, 2026 | <strong>Version:</strong> 1.0</p>
+              <p><strong>Last Updated:</strong> july 15, 2026 | <strong>Version:</strong>1.0.0+1</p>
             </div>
           </div>
         </div>

@@ -43,6 +43,7 @@ export default function Navbar() {
         <Link to="/terms" className="hover:text-app-accent transition">Terms & Conditions</Link>
         <Link to="/refund-policy" className="hover:text-app-accent transition">Refund Policy</Link>
         <Link to="/support" className="hover:text-app-accent transition">Support</Link>
+        <Link to="/delete-account" className="hover:text-app-accent transition">Delete Account</Link>
       </div>
 
       {/* Mobile Menu */}
@@ -56,6 +57,7 @@ export default function Navbar() {
         <Link to="/privacy" onClick={() => setMenuOpen(false)}>Privacy</Link>
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link>
         <Link to="/refund-policy" onClick={() => setMenuOpen(false)}>Refund Policy</Link>
+        <Link to="/delete-account" onClick={() => setMenuOpen(false)}>Delete Account</Link>
       </div>
     </nav>
   );

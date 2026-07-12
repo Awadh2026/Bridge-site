@@ -68,7 +68,7 @@ export default function Support() {
 
             {/* Footer */}
             <div className="text-center text-app-body text-xs pt-4">
-              <p><strong>Last Updated:</strong> May 11, 2026 | <strong>Version:</strong> 1.0</p>
+              <p><strong>Last Updated:</strong> july 15, 2026 | <strong>Version:</strong> 1.0.0+1</p>
             </div>
           </div>
         </div>

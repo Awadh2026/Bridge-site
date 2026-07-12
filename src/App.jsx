@@ -7,6 +7,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Support from "./pages/Support";
 import RefundPolicy from "./pages/RefundPolicy";
+import DeleteAccount from "./pages/DeleteAccount";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/support" element={<Support />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
 
       <Footer />

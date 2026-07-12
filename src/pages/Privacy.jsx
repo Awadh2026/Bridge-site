@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Privacy() {
   return (
     <>
@@ -121,6 +123,12 @@ export default function Privacy() {
                 <li>📤 <strong>Data Portability:</strong> Request in portable format</li>
               </ul>
               <p className="text-app-body mt-3 text-xs md:text-sm">Contact: <span className="text-app-header font-semibold">support@awadhinfosolution.in</span></p>
+              <p className="text-app-body mt-3 text-xs md:text-sm">
+                For account deletion requests, visit <Link to="/delete-account" className="text-app-accent font-semibold hover:underline">our delete account page</Link>.
+              </p>
+              <p className="text-app-body mt-3 text-xs md:text-sm">
+                You can also delete your account directly from the app by opening your profile and selecting Delete Account.
+              </p>
             </div>
 
             {/* Section 8 */}

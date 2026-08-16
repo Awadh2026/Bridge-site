@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import zingerrLogo from "../assets/zingerr.png";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   return (
     <nav className="bg-app-bg text-app-header px-6 py-5 flex items-center justify-between relative border-b-4 border-app-accent">
       <Link to="/" className="z-20 shrink-0">
@@ -44,6 +46,31 @@ export default function Navbar() {
         <Link to="/refund-policy" className="hover:text-app-accent transition">Refund Policy</Link>
         <Link to="/support" className="hover:text-app-accent transition">Support</Link>
         <Link to="/delete-account" className="hover:text-app-accent transition">Delete Account</Link>
+        
+        {/* Auth Button */}
+        {user ? (
+          <>
+            <Link
+              to="/admin/orders"
+              className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100"
+            >
+              Orders
+            </Link>
+            <button
+              onClick={() => logout()}
+              className="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-app-bg bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-app-accent focus:ring-offset-2"
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-app-accent focus:ring-offset-2"
+          >
+            Sign in
+          </Link>
+        )}
       </div>
 
       {/* Mobile Menu */}
@@ -58,6 +85,36 @@ export default function Navbar() {
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link>
         <Link to="/refund-policy" onClick={() => setMenuOpen(false)}>Refund Policy</Link>
         <Link to="/delete-account" onClick={() => setMenuOpen(false)}>Delete Account</Link>
+        
+        {/* Mobile Auth Button */}
+        {user ? (
+          <>
+            <Link
+              to="/admin/orders"
+              onClick={() => setMenuOpen(false)}
+              className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Orders
+            </Link>
+            <button
+              onClick={() => {
+                logout();
+                setMenuOpen(false);
+              }}
+              className="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-app-bg bg-white hover:bg-gray-100"
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Sign in
+          </Link>
+        )}
       </div>
     </nav>
   );

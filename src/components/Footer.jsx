@@ -50,20 +50,6 @@ export default function Footer() {
             </span>
             <span>Play Store</span>
           </a>
-          <a
-            href="https://www.linkedin.com/company/awadh-info-solution/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Awadh Info Solution on LinkedIn"
-            className="flex items-center gap-2 rounded-full bg-white border border-app-accent/30 px-4 py-2 hover:border-app-accent transition text-app-body"
-          >
-            <span className="w-5 h-5 text-[#0A66C2]">
-              <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor" aria-hidden="true">
-                <path d="M4.98 3.5A2.5 2.5 0 0 0 2.5 6v12a2.5 2.5 0 0 0 2.48 2.5h14.04A2.5 2.5 0 0 0 21.5 18V6a2.5 2.5 0 0 0-2.48-2.5H4.98zm3.27 15.5H6.5V9.5h1.75v9.5zm-.88-10.75a1.02 1.02 0 1 1 0-2.05 1.02 1.02 0 0 1 0 2.05zm11.34 10.75h-1.75v-4.75c0-1.14-.4-1.92-1.4-1.92-.76 0-1.21.51-1.41 1.01-.07.17-.09.4-.09.63V18h-1.75s.02-6.5 0-7.19h1.75v1.02c.23-.35.64-.85 1.56-.85 1.14 0 1.99.74 1.99 2.33V18z" />
-              </svg>
-            </span>
-            <span>LinkedIn</span>
-          </a>
         </div>
       </div>
     </footer>

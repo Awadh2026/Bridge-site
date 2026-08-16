@@ -29,6 +29,8 @@ export default function AdminProducts() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(30)
   const [formData, setFormData] = useState(emptyForm)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [productToDelete, setProductToDelete] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -152,16 +154,24 @@ export default function AdminProducts() {
     setShowForm(true)
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return
+  const openDeleteConfirm = (product) => {
+    setProductToDelete(product)
+    setShowDeleteConfirm(true)
+  }
+
+  const handleDelete = async () => {
+    if (!productToDelete) return
 
     try {
       const { error: deleteError } = await supabase
         .from('products')
         .delete()
-        .eq('id', id)
+        .eq('id', productToDelete.id)
 
       if (deleteError) throw deleteError
+
+      setShowDeleteConfirm(false)
+      setProductToDelete(null)
       fetchProducts()
     } catch (err) {
       console.error('Delete error:', err)
@@ -200,6 +210,38 @@ export default function AdminProducts() {
         {error && (
           <div className="mb-4 p-3 rounded-md border border-red-200 bg-red-50 text-red-700">
             {error}
+          </div>
+        )}
+
+        {showDeleteConfirm && productToDelete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+              <h3 className="text-xl font-bold text-app-header">Delete Product</h3>
+              <p className="mt-3 text-sm text-gray-600">
+                Are you sure you want to delete <span className="font-semibold text-gray-900">{productToDelete.name}</span>?
+              </p>
+              <p className="mt-1 text-xs text-gray-500">This action cannot be undone.</p>
+
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDeleteConfirm(false)
+                    setProductToDelete(null)
+                  }}
+                  className="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
@@ -477,7 +519,7 @@ export default function AdminProducts() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDelete(product.id)}
+                            onClick={() => openDeleteConfirm(product)}
                             className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
                           >
                             Delete

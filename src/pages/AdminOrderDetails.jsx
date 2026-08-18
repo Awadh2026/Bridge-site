@@ -16,7 +16,7 @@ const formatDate = (value) => {
   return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleString()
 }
 
-const statusOptions = ['Pending', 'Confirmed', 'Assigned', 'Out for Delivery', 'Delivered', 'Cancelled']
+const statusOptions = ['Pending', 'Confirmed', 'Assigned', 'Out for delivery', 'Delivered', 'Cancelled']
 
 const normalizeStatus = (value) => String(value || '').trim()
 
@@ -154,8 +154,8 @@ export default function AdminOrderDetails() {
     const validTransitions = {
       'Placed': ['Confirmed', 'Cancelled'],
       'Confirmed': ['Assigned', 'Cancelled'],
-      'Assigned': ['Out for Delivery', 'Cancelled'],
-      'Out for Delivery': ['Delivered'],
+      'Assigned': ['Out for delivery', 'Cancelled'],
+      'Out for delivery': ['Delivered'],
       'Delivered': [],
       'Cancelled': []
     }
@@ -227,8 +227,8 @@ export default function AdminOrderDetails() {
     const validTransitions = {
       'Placed': ['Confirmed', 'Cancelled'],
       'Confirmed': ['Assigned', 'Cancelled'],
-      'Assigned': ['Out for Delivery', 'Cancelled'],
-      'Out for Delivery': ['Delivered'],
+      'Assigned': ['Out for delivery', 'Cancelled'],
+      'Out for delivery': ['Delivered'],
       'Delivered': [],
       'Cancelled': []
     }
@@ -345,7 +345,7 @@ export default function AdminOrderDetails() {
                       value={selectedPartner}
                       onChange={(event) => setSelectedPartner(event.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      disabled={assigning || ['Out for Delivery', 'Delivered', 'Cancelled'].includes(order?.order_status)}
+                      disabled={assigning || ['Out for delivery', 'Delivered', 'Cancelled'].includes(order?.order_status)}
                     >
                       <option value="">-- Choose a delivery partner --</option>
                       {deliveryPartners.map((partner) => (
@@ -358,7 +358,7 @@ export default function AdminOrderDetails() {
 
                   <button
                     onClick={handleAssignDeliveryPartner}
-                    disabled={assigning || !selectedPartner || ['Out for Delivery', 'Delivered', 'Cancelled'].includes(order?.order_status)}
+                    disabled={assigning || !selectedPartner || ['Out for delivery', 'Delivered', 'Cancelled'].includes(order?.order_status)}
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                   >
                     {assigning ? 'Assigning...' : 'Assign & Set Status to Assigned'}

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks/useSEO.jsx";
 
 export default function Privacy() {
+  useSEO({
+    title: "Privacy Policy - Awadh Info Solution & Zingerr App",
+    description: "Read our comprehensive privacy policy for Zingerr and Awadh Info Solution. Learn how we collect, use, and protect your personal information and data.",
+    keywords: "privacy policy, data protection, GDPR compliance, user privacy, data security, OTP authentication",
+    url: "https://www.awadhinfosolution.in/#/privacy",
+  });
+
   return (
     <>
       {/* PRIVACY HEADER/HERO SECTION - BLUE SCREEN */}

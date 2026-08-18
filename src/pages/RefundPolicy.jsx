@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks/useSEO.jsx";
 
 export default function RefundPolicy() {
+  useSEO({
+    title: "Refund Policy - Awadh Info Solution & Zingerr",
+    description: "Learn about our refund policy for Zingerr and Awadh Info Solution services. Understand our return procedures and customer satisfaction guarantees.",
+    keywords: "refund policy, money back guarantee, return policy, customer satisfaction, refund process",
+    url: "https://www.awadhinfosolution.in/#/refund-policy",
+  });
+
   return (
     <>
       <section className="min-h-screen bg-app-bg text-app-body px-6 py-12 md:py-16 flex-1">

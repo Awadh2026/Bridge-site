@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
+import { useSEO } from '../hooks/useSEO.jsx'
 
 const emptyForm = {
   category_code: '',
@@ -18,6 +19,13 @@ const emptyForm = {
 }
 
 export default function AdminProducts() {
+  useSEO({
+    title: "Admin Products - Awadh Info Solution",
+    description: "Manage your product inventory and catalog on the Awadh Info Solution admin dashboard.",
+    keywords: "admin dashboard, product management, inventory management",
+    url: "https://www.awadhinfosolution.in/#/admin/products",
+  });
+
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { useSEO } from "../hooks/useSEO.jsx";
 
 export default function DeleteAccount() {
+  useSEO({
+    title: "Delete Account - Awadh Info Solution & Zingerr",
+    description: "Learn how to delete your Zingerr or Awadh Info Solution account. Understand the account deletion process and data removal procedures.",
+    keywords: "delete account, account deletion, remove account, data deletion, privacy",
+    url: "https://www.awadhinfosolution.in/#/delete-account",
+  });
+
   return (
     <section className="min-h-screen bg-app-bg text-app-body px-6 py-12 md:py-16 flex-1">
       <div className="max-w-4xl mx-auto">

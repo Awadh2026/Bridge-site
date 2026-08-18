@@ -1,4 +1,13 @@
+import { useSEO } from "../hooks/useSEO.jsx";
+
 export default function Support() {
+  useSEO({
+    title: "Support - Awadh Info Solution & Zingerr Help Center",
+    description: "Get help and support for Zingerr and Awadh Info Solution. Contact our customer support team, access FAQs, and find solutions to common issues.",
+    keywords: "customer support, help center, FAQ, contact us, technical support, customer service",
+    url: "https://www.awadhinfosolution.in/#/support",
+  });
+
   return (
     <>
       {/* SUPPORT HEADER/HERO SECTION - BLUE SCREEN */}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
+import { useSEO } from '../hooks/useSEO.jsx'
 
 const normalizeValue = (value) => {
   if (value === null || value === undefined || value === '') return 0
@@ -43,6 +44,13 @@ const getDate = (order) => {
 }
 
 export default function AdminOrders() {
+  useSEO({
+    title: "Admin Orders - Awadh Info Solution",
+    description: "View and manage all orders in your Awadh Info Solution admin dashboard.",
+    keywords: "admin dashboard, order management, order tracking",
+    url: "https://www.awadhinfosolution.in/#/admin/orders",
+  });
+
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')

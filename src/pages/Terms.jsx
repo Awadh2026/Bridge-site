@@ -1,4 +1,13 @@
+import { useSEO } from "../hooks/useSEO.jsx";
+
 export default function Terms() {
+  useSEO({
+    title: "Terms & Conditions - Awadh Info Solution & Zingerr",
+    description: "Review our terms and conditions for using Zingerr and Awadh Info Solution services. Understand your rights, responsibilities, and our service policies.",
+    keywords: "terms of service, terms and conditions, user agreement, service policy, legal terms",
+    url: "https://www.awadhinfosolution.in/#/terms",
+  });
+
   return (
     <>
       {/* TERMS HEADER/HERO SECTION - BLUE SCREEN */}

@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
+import { useSEO } from '../hooks/useSEO.jsx'
 import zingerrLogo from '../assets/zingerr.png'
 
 export default function Login() {
+  useSEO({
+    title: "Admin Login - Awadh Info Solution & Zingerr",
+    description: "Log in to your Awadh Info Solution admin account to manage products, orders, and more.",
+    keywords: "admin login, login page, authentication, admin dashboard",
+    url: "https://www.awadhinfosolution.in/#/login",
+  });
+
   const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

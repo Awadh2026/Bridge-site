@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../supabase/client'
+import { useSEO } from '../hooks/useSEO.jsx'
 
 const formatCurrency = (value) =>
   new Intl.NumberFormat('en-IN', {
@@ -20,6 +21,13 @@ const statusOptions = ['Pending', 'Confirmed', 'Assigned', 'Out for Delivery', '
 const normalizeStatus = (value) => String(value || '').trim()
 
 export default function AdminOrderDetails() {
+  useSEO({
+    title: "Order Details - Awadh Info Solution Admin",
+    description: "View detailed information about a specific order in your Awadh Info Solution admin dashboard.",
+    keywords: "order details, order tracking, admin dashboard",
+    url: "https://www.awadhinfosolution.in/#/admin/orders",
+  });
+
   const { id } = useParams()
   const navigate = useNavigate()
   const [order, setOrder] = useState(null)
@@ -34,6 +42,10 @@ export default function AdminOrderDetails() {
   const [delivering, setDelivering] = useState(false)
   const [pinCode, setPinCode] = useState('')
   const [pinError, setPinError] = useState('')
+  const [assignPartnerSuccess, setAssignPartnerSuccess] = useState('')
+  const [assignPartnerError, setAssignPartnerError] = useState('')
+  const [statusUpdateSuccess, setStatusUpdateSuccess] = useState('')
+  const [statusUpdateError, setStatusUpdateError] = useState('')
 
   useEffect(() => {
     const admin = localStorage.getItem('admin_user')
@@ -86,14 +98,14 @@ export default function AdminOrderDetails() {
 
   const handleAssignDeliveryPartner = async () => {
     if (!selectedPartner) {
-      setError('Please select a delivery partner')
+      setAssignPartnerError('Please select a delivery partner')
       return
     }
 
     try {
       setAssigning(true)
-      setError('')
-      setSuccessMessage('')
+      setAssignPartnerError('')
+      setAssignPartnerSuccess('')
 
       const selectedPartnerData = deliveryPartners.find((partner) => partner.id === selectedPartner)
       const nextStatus = 'Assigned'
@@ -116,13 +128,13 @@ export default function AdminOrderDetails() {
 
       setOrder(updatedOrder)
       setSelectedStatus(nextStatus)
-      setSuccessMessage(`Order assigned to ${selectedPartnerData?.name || 'delivery partner'} and status updated to Assigned successfully.`)
+      setAssignPartnerSuccess(`Order assigned to ${selectedPartnerData?.name || 'delivery partner'} and status updated to Assigned successfully.`)
       setSelectedPartner(selectedPartner)
 
-      setTimeout(() => setSuccessMessage(''), 3000)
+      setTimeout(() => setAssignPartnerSuccess(''), 3000)
     } catch (err) {
       console.error('Assignment error:', err)
-      setError('Failed to assign delivery partner')
+      setAssignPartnerError('Failed to assign delivery partner')
     } finally {
       setAssigning(false)
     }
@@ -133,7 +145,7 @@ export default function AdminOrderDetails() {
     const currentOrderStatus = normalizeStatus(order?.order_status || '')
 
     if (!nextStatus) {
-      setError('Please select a valid order status.')
+      setStatusUpdateError('Please select a valid order status.')
       return
     }
 
@@ -151,7 +163,7 @@ export default function AdminOrderDetails() {
     // Check if the transition is valid (prevent invalid transitions)
     const allowedNextStatuses = validTransitions[currentOrderStatus] || []
     if (!allowedNextStatuses.includes(nextStatus)) {
-      setError(`Cannot change status from "${currentOrderStatus}" to "${nextStatus}". Valid transitions: ${allowedNextStatuses.join(', ') || 'None (final status)'}`)
+      setStatusUpdateError(`Cannot change status from "${currentOrderStatus}" to "${nextStatus}". Valid transitions: ${allowedNextStatuses.join(', ') || 'None (final status)'}`)
       return
     }
 
@@ -180,8 +192,8 @@ export default function AdminOrderDetails() {
 
     try {
       setStatusUpdating(true)
-      setError('')
-      setSuccessMessage('')
+      setStatusUpdateError('')
+      setStatusUpdateSuccess('')
 
       const { error: updateError } = await supabase
         .from('orders_status')
@@ -197,12 +209,12 @@ export default function AdminOrderDetails() {
         order_status: nextStatus
       }))
 
-      setSuccessMessage(`Order status updated to ${nextStatus} successfully.`)
+      setStatusUpdateSuccess(`Order status updated to ${nextStatus} successfully.`)
       setPinCode('')
-      setTimeout(() => setSuccessMessage(''), 3000)
+      setTimeout(() => setStatusUpdateSuccess(''), 3000)
     } catch (err) {
       console.error('Status update error:', err)
-      setError('Failed to update order status.')
+      setStatusUpdateError('Failed to update order status.')
     } finally {
       setStatusUpdating(false)
     }
@@ -312,6 +324,18 @@ export default function AdminOrderDetails() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-lg font-bold text-app-header mb-4">Assign Delivery Partner</h3>
 
+                {assignPartnerError && (
+                  <div className="mb-4 p-3 rounded-md border border-red-200 bg-red-50 text-red-700 text-sm">
+                    ✕ {assignPartnerError}
+                  </div>
+                )}
+
+                {assignPartnerSuccess && (
+                  <div className="mb-4 p-3 rounded-md border border-green-200 bg-green-50 text-green-700 text-sm">
+                    ✓ {assignPartnerSuccess}
+                  </div>
+                )}
+
                 <div className="flex flex-col gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -344,6 +368,18 @@ export default function AdminOrderDetails() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-lg font-bold text-app-header mb-4">Update Order Status</h3>
 
+                {statusUpdateError && (
+                  <div className="mb-4 p-3 rounded-md border border-red-200 bg-red-50 text-red-700 text-sm">
+                    ✕ {statusUpdateError}
+                  </div>
+                )}
+
+                {statusUpdateSuccess && (
+                  <div className="mb-4 p-3 rounded-md border border-green-200 bg-green-50 text-green-700 text-sm">
+                    ✓ {statusUpdateSuccess}
+                  </div>
+                )}
+
                 <div className="flex flex-col gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -356,7 +392,7 @@ export default function AdminOrderDetails() {
                       value={selectedStatus}
                       onChange={(event) => {
                         setSelectedStatus(event.target.value)
-                        setError('')
+                        setStatusUpdateError('')
                       }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       disabled={statusUpdating || order?.order_status === 'Delivered'}

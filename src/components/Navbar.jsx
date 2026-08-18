@@ -66,7 +66,7 @@ export default function Navbar() {
         ) : (
           <Link
             to="/login"
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-app-accent focus:ring-offset-2"
+            className="hidden px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-app-accent focus:ring-offset-2"
           >
             Sign in
           </Link>
@@ -110,7 +110,7 @@ export default function Navbar() {
           <Link
             to="/login"
             onClick={() => setMenuOpen(false)}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="hidden px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Sign in
           </Link>

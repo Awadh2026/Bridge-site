@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet-async";
 
 export function useSEO({
-  title = "Awadh Info Solution - Innovative Technology Solutions",
-  description = "Awadh Info Solution - Your trusted technology partner for innovative solutions and digital transformation.",
-  keywords = "technology, solutions, digital transformation, web development, software services",
+  title = "Zingerr (Zinger) App by Awadh Info Solution",
+  description = "Zingerr, also searched as Zinger, by Awadh Info Solution is a powerful app for streamlining orders, organizing workflows, and helping modern teams work faster.",
+  keywords = "Zingerr, Zinger, Zingerr app, Zinger app, Awadh Info Solution, order management app, workflow management app",
   image = "https://www.awadhinfosolution.in/og-image.png",
   url = "https://www.awadhinfosolution.in/",
   type = "website",

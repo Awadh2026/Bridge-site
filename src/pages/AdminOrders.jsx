@@ -169,6 +169,7 @@ export default function AdminOrders() {
     { label: 'Placed', value: orders.filter((order) => String(getStatus(order)).toLowerCase() === 'placed').length, key: 'placed' },
     { label: 'Confirmed', value: orders.filter((order) => String(getStatus(order)).toLowerCase() === 'confirmed').length, key: 'confirmed' },
     { label: 'Assigned', value: orders.filter((order) => String(getStatus(order)).toLowerCase() === 'assigned').length, key: 'assigned' },
+    { label: 'Out for delivery', value: orders.filter((order) => String(getStatus(order)).toLowerCase() === 'out for delivery').length, key: 'out for delivery' },
     { label: 'Delivered', value: orders.filter((order) => String(getStatus(order)).toLowerCase().includes('delivered')).length, key: 'delivered' },
     { label: 'Cancelled', value: orders.filter((order) => String(getStatus(order)).toLowerCase().includes('cancel')).length, key: 'cancelled' }
   ]
@@ -207,7 +208,7 @@ export default function AdminOrders() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-7 xl:grid-cols-7 gap-2 mb-6">
           {statusCards.map((card) => (
             <button
               key={card.key}

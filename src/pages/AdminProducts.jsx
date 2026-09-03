@@ -3,6 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
 import { useSEO } from '../hooks/useSEO.jsx'
 
+const CDN_BASE_URL = 'https://cdn.awadhinfosolution.in/'
+
+const normalizeImageUrl = (value) => {
+  if (!value) return ''
+
+  const trimmedValue = value.trim()
+  if (!trimmedValue) return ''
+  if (/^https?:\/\//i.test(trimmedValue)) return trimmedValue
+
+  return `${CDN_BASE_URL}${trimmedValue.replace(/^\/+/, '')}`
+}
+
 const emptyForm = {
   category_code: '',
   name: '',
@@ -10,6 +22,7 @@ const emptyForm = {
   brand: '',
   image_url: '',
   is_active: true,
+  is_available: true,
   price: '',
   hindi_name: '',
   product_id: '',
@@ -108,8 +121,9 @@ export default function AdminProducts() {
         name: formData.name,
         description: formData.description,
         brand: formData.brand,
-        image_url: formData.image_url,
+        image_url: normalizeImageUrl(formData.image_url),
         is_active: formData.is_active,
+        is_available: formData.is_available,
         price: Number(formData.price) || 0,
         hindi_name: formData.hindi_name,
         product_id: formData.product_id,
@@ -149,8 +163,9 @@ export default function AdminProducts() {
       name: product.name || '',
       description: product.description || '',
       brand: product.brand || '',
-      image_url: product.image_url || '',
+      image_url: normalizeImageUrl(product.image_url || ''),
       is_active: Boolean(product.is_active),
+      is_available: Boolean(product.is_available),
       price: product.price ?? '',
       hindi_name: product.hindi_name || '',
       product_id: product.product_id || '',
@@ -425,9 +440,14 @@ export default function AdminProducts() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
                   <input
-                    type="url"
+                    type="text"
                     value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                    onChange={(e) => {
+                      const rawValue = e.target.value
+                      const nextValue = rawValue.startsWith('http') ? rawValue : normalizeImageUrl(rawValue)
+                      setFormData({ ...formData, image_url: nextValue })
+                    }}
+                    placeholder="https://cdn.awadhinfosolution.in/"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   />
                 </div>
@@ -440,6 +460,16 @@ export default function AdminProducts() {
                     className="h-4 w-4"
                   />
                   <label className="text-sm font-medium text-gray-700">Active</label>
+                </div>
+
+                <div className="flex items-center gap-2 pt-6">
+                  <input
+                    type="checkbox"
+                    checked={formData.is_available}
+                    onChange={(e) => setFormData({ ...formData, is_available: e.target.checked })}
+                    className="h-4 w-4"
+                  />
+                  <label className="text-sm font-medium text-gray-700">Available</label>
                 </div>
               </div>
 
@@ -477,6 +507,7 @@ export default function AdminProducts() {
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Brand</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Price</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Available</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
                 </tr>
               </thead>
@@ -516,6 +547,11 @@ export default function AdminProducts() {
                       <td className="px-4 py-3">
                         <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${product.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                           {product.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${product.is_available !== false ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'}`}>
+                          {product.is_available !== false ? 'Available' : 'Unavailable'}
                         </span>
                       </td>
                       <td className="px-4 py-3">

@@ -37,7 +37,7 @@ export default function Footer() {
             <span>Twitter</span>
           </a>
           <a
-            href="https://play.google.com/store/apps/details?id=com.awadhinfosolution"
+            href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Awadh Info Solution on Google Play Store"

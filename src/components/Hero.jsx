@@ -14,7 +14,7 @@ export default function Hero() {
           </p>
 
           <a
-            href="https://play.google.com/store/apps/details?id=com.awadhinfosolution"
+            href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex bg-app-accent hover:opacity-90 text-white px-8 py-4 rounded-full font-semibold transition"

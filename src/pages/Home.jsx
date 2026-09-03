@@ -18,7 +18,7 @@ export default function Home() {
     operatingSystem: "Android",
     description: "Zingerr, also known as Zinger, helps modern teams streamline orders, organize workflows, and work faster.",
     url: "https://www.awadhinfosolution.in/",
-    downloadUrl: "https://play.google.com/store/apps/details?id=com.awadhinfosolution",
+    downloadUrl: "https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr",
     publisher: {
       "@type": "Organization",
       name: "Awadh Info Solution Pvt Ltd",

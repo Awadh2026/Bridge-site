@@ -39,6 +39,8 @@ const getDeliveryPartner = (order) =>
 const getStatus = (order) =>
   pickValue(order, ['order_status', 'status', 'delivery_status', 'payment_status']) || 'Pending'
 
+const isCancelled = (order) => String(getStatus(order)).toLowerCase().includes('cancel')
+
 const getDate = (order) => {
   const dateValue = pickValue(order, ['created_at', 'order_date', 'date', 'updated_at'])
   if (!dateValue) return '—'
@@ -114,12 +116,14 @@ export default function AdminOrders() {
   )
 
   const totalCollection = useMemo(
-    () => orders.reduce((sum, order) => sum + getAmount(order), 0),
+    () => orders.reduce((sum, order) => isCancelled(order) ? sum : sum + getAmount(order), 0),
     [orders]
   )
 
   const upiCollection = useMemo(
     () => orders.reduce((sum, order) => {
+      if (isCancelled(order)) return sum
+
       const method = String(pickValue(order, ['payment_method', 'paymentMethod']) || '').toLowerCase()
       return method.includes('upi') || method.includes('phonepe') || method.includes('googlepay') || method.includes('paytm')
         ? sum + getAmount(order)
@@ -130,6 +134,8 @@ export default function AdminOrders() {
 
   const codCollection = useMemo(
     () => orders.reduce((sum, order) => {
+      if (isCancelled(order)) return sum
+
       const method = String(pickValue(order, ['payment_method', 'paymentMethod']) || '').toLowerCase()
       return method.includes('cod') || method.includes('cash on delivery') || method.includes('cash')
         ? sum + getAmount(order)

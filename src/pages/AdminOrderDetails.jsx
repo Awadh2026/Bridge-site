@@ -2,6 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../supabase/client'
 import { useSEO } from '../hooks/useSEO.jsx'
+import { getCached, invalidateCache } from '../utils/apiCache'
+
+const ORDERS_STATUS_CACHE_KEY = 'orders_status'
+const getOrderCacheKey = (id) => `orders_status:${id}`
 
 const formatCurrency = (value) =>
   new Intl.NumberFormat('en-IN', {
@@ -31,6 +35,7 @@ export default function AdminOrderDetails() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [order, setOrder] = useState(null)
+  const [orderItems, setOrderItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [deliveryPartners, setDeliveryPartners] = useState([])
@@ -57,17 +62,29 @@ export default function AdminOrderDetails() {
     const fetchOrder = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('orders_status')
-          .select('*, delivery_pin')
-          .eq('id', id)
-          .maybeSingle()
+        const data = await getCached(getOrderCacheKey(id), async () => {
+          const [{ data: orderData, error: orderError }, { data: itemsData, error: itemsError }] = await Promise.all([
+            supabase
+              .from('orders_status')
+              .select('*, delivery_pin')
+              .eq('id', id)
+              .maybeSingle(),
+            supabase
+              .from('order_items')
+              .select('*')
+              .eq('order_id', id)
+          ])
 
-        if (fetchError) throw fetchError
-        setOrder(data)
-        setSelectedStatus(data?.order_status || 'Pending')
-        setSelectedPartner(data?.delivery_partner_id || '')
-        setError(!data ? 'Order not found.' : '')
+          if (orderError) throw orderError
+          if (itemsError) throw itemsError
+          return { order: orderData, items: itemsData || [] }
+        })
+
+        setOrder(data.order)
+        setOrderItems(data.items)
+        setSelectedStatus(data.order?.order_status || 'Pending')
+        setSelectedPartner(data.order?.delivery_partner_id || '')
+        setError(!data.order ? 'Order not found.' : '')
       } catch (err) {
         console.error('Order detail fetch error:', err)
         setError('Failed to load order details.')
@@ -119,6 +136,9 @@ export default function AdminOrderDetails() {
         .eq('id', id)
 
       if (updateError) throw updateError
+
+      invalidateCache(ORDERS_STATUS_CACHE_KEY)
+      invalidateCache(getOrderCacheKey(id))
 
       const updatedOrder = {
         ...order,
@@ -174,16 +194,7 @@ export default function AdminOrderDetails() {
         return
       }
 
-      // Fetch the order to get the stored PIN
-      const { data: orderData, error: fetchError } = await supabase
-        .from('orders_status')
-        .select('delivery_pin')
-        .eq('id', id)
-        .maybeSingle()
-
-      if (fetchError) throw fetchError
-
-      if (orderData?.delivery_pin !== pinCode) {
+      if (order?.delivery_pin !== pinCode) {
         setPinError('Invalid PIN. Please try again.')
         setPinCode('')
         return
@@ -203,6 +214,9 @@ export default function AdminOrderDetails() {
         .eq('id', id)
 
       if (updateError) throw updateError
+
+      invalidateCache(ORDERS_STATUS_CACHE_KEY)
+      invalidateCache(getOrderCacheKey(id))
 
       setOrder((currentOrder) => ({
         ...currentOrder,
@@ -318,6 +332,46 @@ export default function AdminOrderDetails() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+              <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                <h2 className="text-lg font-bold text-app-header">Order Items</h2>
+              </div>
+
+              {orderItems.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead className="bg-white border-b border-gray-200 text-xs uppercase tracking-wide text-gray-500">
+                      <tr>
+                        <th className="px-4 py-3">Item</th>
+                        <th className="px-4 py-3">Quantity</th>
+                        <th className="px-4 py-3">Unit Price</th>
+                        <th className="px-4 py-3">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orderItems.map((item, index) => {
+                        const itemName = item.product_name || item.product_title || item.name || item.title || item.product_id || 'Item'
+                        const quantity = item.quantity ?? item.qty ?? 1
+                        const unitPrice = item.unit_price ?? item.price ?? item.product_price
+                        const itemTotal = item.total_price ?? item.line_total ?? item.total ?? (Number(unitPrice || 0) * Number(quantity || 0))
+
+                        return (
+                          <tr key={item.id || `${itemName}-${index}`} className="border-b border-gray-100 last:border-b-0">
+                            <td className="px-4 py-3 font-medium text-gray-800">{itemName}</td>
+                            <td className="px-4 py-3 text-gray-600">{quantity}</td>
+                            <td className="px-4 py-3 text-gray-600">{unitPrice !== undefined ? formatCurrency(unitPrice) : '—'}</td>
+                            <td className="px-4 py-3 font-medium text-gray-800">{formatCurrency(itemTotal)}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="px-4 py-5 text-sm text-gray-500">No items found for this order.</p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">

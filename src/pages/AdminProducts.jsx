@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
 import { useSEO } from '../hooks/useSEO.jsx'
+import { getCached, invalidateCache } from '../utils/apiCache'
 
 const CDN_BASE_URL = 'https://cdn.awadhinfosolution.in/'
+const PRODUCTS_CACHE_KEY = 'products'
 
 const normalizeImageUrl = (value) => {
   if (!value) return ''
@@ -66,13 +68,17 @@ export default function AdminProducts() {
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      const { data, error: fetchError } = await supabase
-        .from('products')
-        .select('*')
-        .order('name', { ascending: true })
+      const data = await getCached(PRODUCTS_CACHE_KEY, async () => {
+        const { data: productData, error: fetchError } = await supabase
+          .from('products')
+          .select('*')
+          .order('name', { ascending: true })
 
-      if (fetchError) throw fetchError
-      setProducts(data || [])
+        if (fetchError) throw fetchError
+        return productData || []
+      })
+
+      setProducts(data)
       setError('')
     } catch (err) {
       console.error('Fetch error:', err)
@@ -147,6 +153,7 @@ export default function AdminProducts() {
         if (insertError) throw insertError
       }
 
+      invalidateCache(PRODUCTS_CACHE_KEY)
       setFormData(emptyForm)
       setEditingId(null)
       setShowForm(false)
@@ -193,6 +200,7 @@ export default function AdminProducts() {
 
       if (deleteError) throw deleteError
 
+      invalidateCache(PRODUCTS_CACHE_KEY)
       setShowDeleteConfirm(false)
       setProductToDelete(null)
       fetchProducts()

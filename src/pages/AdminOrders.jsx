@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase/client'
 import { useSEO } from '../hooks/useSEO.jsx'
+import { getCached } from '../utils/apiCache'
+
+const ORDERS_STATUS_CACHE_KEY = 'orders_status'
 
 const normalizeValue = (value) => {
   if (value === null || value === undefined || value === '') return 0
@@ -72,14 +75,17 @@ export default function AdminOrders() {
   const fetchOrders = async () => {
     try {
       setLoading(true)
-      const { data, error: fetchError } = await supabase
-        .from('orders_status')
-        .select('*')
+      const data = await getCached(ORDERS_STATUS_CACHE_KEY, async () => {
+        const { data: orderData, error: fetchError } = await supabase
+          .from('orders_status')
+          .select('*')
 
-      if (fetchError) throw fetchError
+        if (fetchError) throw fetchError
+        return orderData || []
+      })
 
-      setOrders(data || [])
-      setError((data || []).length === 0 ? 'No orders found in orders_status.' : '')
+      setOrders(data)
+      setError(data.length === 0 ? 'No orders found in orders_status.' : '')
     } catch (err) {
       console.error('Orders fetch error:', err)
       setError('Failed to load orders from orders_status.')

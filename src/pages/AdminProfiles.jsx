@@ -15,13 +15,19 @@ const emptyForm = {
 
 const formatCreatedAt = (value) => {
   if (!value) return '—'
-  const date = new Date(value)
+  const timestamp = String(value).trim()
+  const hasTimezone = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(timestamp)
+  const date = new Date(hasTimezone ? timestamp : `${timestamp}Z`)
   return Number.isNaN(date.getTime())
     ? String(value)
     : new Intl.DateTimeFormat('en-IN', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-      timeZone: 'Asia/Kolkata'
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'Asia/Kolkata',
+      timeZoneName: 'short'
     }).format(date)
 }
 

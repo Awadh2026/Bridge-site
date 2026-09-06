@@ -25,26 +25,38 @@ export default function Login() {
 
     try {
       const { data: matchedUser, error: loginError } = await supabase.rpc('verify_admin_login', {
-        p_user_id: userId,
+        p_user_id: userId.trim(),
         p_password: password
       })
 
-      if (loginError) throw loginError
+      if (loginError) {
+        console.error('Login RPC error:', loginError)
+        setError(loginError.code === '42883'
+          ? 'Login is not configured. Run verify_admin_login.sql in Supabase SQL Editor.'
+          : loginError.message || 'Unable to sign in')
+        return
+      }
 
-      if (!matchedUser) {
+      const userRecord = Array.isArray(matchedUser) ? matchedUser[0] : matchedUser
+
+      if (!userRecord) {
         setError('Invalid user ID or admin not found')
-        setLoading(false)
         return
       }
 
       let profile = null
-      const profileLookupValues = [matchedUser.email, userId].filter(Boolean)
+      const profileLookupValues = [
+        ['email', userRecord.email],
+        ['email', userId.trim()],
+        ['emp_code', userId.trim()],
+        ['phone', userId.trim()]
+      ].filter(([, value]) => value)
 
-      for (const profileValue of profileLookupValues) {
+      for (const [field, profileValue] of profileLookupValues) {
         const { data, error: profileError } = await supabase
           .from('profiles')
           .select('id, email, role, is_verified, emp_code, full_name, phone')
-          .or(`email.eq.${profileValue},emp_code.eq.${profileValue}`)
+          .eq(field, profileValue)
           .maybeSingle()
 
         if (!profileError && data) {
@@ -53,26 +65,26 @@ export default function Login() {
         }
       }
 
-      const role = String(profile?.role || matchedUser.role || '').trim().toLowerCase()
-      const isAdmin = role === 'admin' || matchedUser.is_admin === true
+      const role = String(profile?.role || userRecord.role || '').trim().toLowerCase()
+      const isAdmin = role === 'admin' || userRecord.is_admin === true
       const isDeliveryPartner = ['delivery', 'delivery_partner', 'delivery partner'].includes(role)
 
       localStorage.removeItem('admin_user')
       localStorage.removeItem('delivery_partner')
 
       if (isAdmin) {
-        localStorage.setItem('admin_user', JSON.stringify({ ...matchedUser, ...profile, role }))
+        localStorage.setItem('admin_user', JSON.stringify({ ...userRecord, ...profile, role }))
         navigate('/admin/orders')
         return
       }
 
       if (isDeliveryPartner) {
-        localStorage.setItem('delivery_partner', JSON.stringify({ ...matchedUser, ...profile, role }))
+        localStorage.setItem('delivery_partner', JSON.stringify({ ...userRecord, ...profile, role }))
         navigate('/delivery/orders')
         return
       }
 
-      navigate('/')
+      setError('No valid admin or delivery-partner role was found for this account.')
     } catch (err) {
       console.error('Login error:', err)
       setError('An error occurred during login. Please try again.')

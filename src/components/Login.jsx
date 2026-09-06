@@ -24,25 +24,12 @@ export default function Login() {
     setLoading(true)
 
     try {
-      let matchedUser = null
-      const userFieldCandidates = ['userId', 'userid']
+      const { data: matchedUser, error: loginError } = await supabase.rpc('verify_admin_login', {
+        p_user_id: userId,
+        p_password: password
+      })
 
-      for (const field of userFieldCandidates) {
-        try {
-          const { data, error } = await supabase
-            .from('admin')
-            .select('*')
-            .eq(field, userId)
-            .maybeSingle()
-
-          if (!error && data) {
-            matchedUser = data
-            break
-          }
-        } catch (lookupError) {
-          // ignore and try the next field name
-        }
-      }
+      if (loginError) throw loginError
 
       if (!matchedUser) {
         setError('Invalid user ID or admin not found')
@@ -50,14 +37,42 @@ export default function Login() {
         return
       }
 
-      if (matchedUser.password !== password) {
-        setError('Invalid password')
-        setLoading(false)
+      let profile = null
+      const profileLookupValues = [matchedUser.email, userId].filter(Boolean)
+
+      for (const profileValue of profileLookupValues) {
+        const { data, error: profileError } = await supabase
+          .from('profiles')
+          .select('id, email, role, is_verified, emp_code, full_name, phone')
+          .or(`email.eq.${profileValue},emp_code.eq.${profileValue}`)
+          .maybeSingle()
+
+        if (!profileError && data) {
+          profile = data
+          break
+        }
+      }
+
+      const role = String(profile?.role || matchedUser.role || '').trim().toLowerCase()
+      const isAdmin = role === 'admin' || matchedUser.is_admin === true
+      const isDeliveryPartner = ['delivery', 'delivery_partner', 'delivery partner'].includes(role)
+
+      localStorage.removeItem('admin_user')
+      localStorage.removeItem('delivery_partner')
+
+      if (isAdmin) {
+        localStorage.setItem('admin_user', JSON.stringify({ ...matchedUser, ...profile, role }))
+        navigate('/admin/orders')
         return
       }
 
-      localStorage.setItem('admin_user', JSON.stringify(matchedUser))
-      navigate('/admin/orders')
+      if (isDeliveryPartner) {
+        localStorage.setItem('delivery_partner', JSON.stringify({ ...matchedUser, ...profile, role }))
+        navigate('/delivery/orders')
+        return
+      }
+
+      navigate('/')
     } catch (err) {
       console.error('Login error:', err)
       setError('An error occurred during login. Please try again.')

@@ -197,6 +197,18 @@ export default function AdminOrders() {
 
           <div className="flex gap-2">
             <Link
+              to="/admin/profiles"
+              className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+            >
+              Profiles
+            </Link>
+            <Link
+              to="/admin/categories"
+              className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+            >
+              Categories
+            </Link>
+            <Link
               to="/admin/products"
               className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
             >

@@ -28,6 +28,7 @@ export default function AdminCategories() {
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [formData, setFormData] = useState(emptyForm)
+  const [categoryFilter, setCategoryFilter] = useState('all')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -134,6 +135,11 @@ export default function AdminCategories() {
     setShowForm(true)
   }
 
+  const categoryCodes = [...new Set(categories.map((category) => category.category_code).filter(Boolean))]
+  const filteredCategories = categoryFilter === 'all'
+    ? categories
+    : categories.filter((category) => category.category_code === categoryFilter)
+
   return (
     <div className="min-h-screen bg-app-bg text-app-body p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
@@ -192,7 +198,13 @@ export default function AdminCategories() {
           </form>
         )}
 
-        <div className="mb-4 flex justify-end">
+        <div className="mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <label className="w-full md:w-64 text-sm font-medium text-gray-700">Filter by category code
+            <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md bg-white">
+              <option value="all">All category codes</option>
+              {categoryCodes.map((code) => <option key={code} value={code}>{code}</option>)}
+            </select>
+          </label>
           <button onClick={() => { setShowForm(true); setEditingId(null); setFormData(emptyForm) }} className="px-4 py-2 bg-app-accent text-white rounded-md hover:bg-opacity-90">
             + Add Category
           </button>
@@ -216,7 +228,9 @@ export default function AdminCategories() {
                   <tr><td colSpan="6" className="px-4 py-10 text-center text-gray-500">Loading categories...</td></tr>
                 ) : categories.length === 0 ? (
                   <tr><td colSpan="6" className="px-4 py-10 text-center text-gray-500">No categories found</td></tr>
-                ) : categories.map((category) => {
+                ) : filteredCategories.length === 0 ? (
+                  <tr><td colSpan="6" className="px-4 py-10 text-center text-gray-500">No categories match this code</td></tr>
+                ) : filteredCategories.map((category) => {
                   const available = category.is_available !== false
                   return (
                     <tr key={category.id} className="hover:bg-gray-50">

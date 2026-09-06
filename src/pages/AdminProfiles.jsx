@@ -10,14 +10,19 @@ const emptyForm = {
   phone: '',
   email: '',
   is_verified: false,
-  role: 'user',
-  emp_code: ''
+  role: 'user'
 }
 
 const formatCreatedAt = (value) => {
   if (!value) return '—'
   const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString()
+  return Number.isNaN(date.getTime())
+    ? String(value)
+    : new Intl.DateTimeFormat('en-IN', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'Asia/Kolkata'
+    }).format(date)
 }
 
 export default function AdminProfiles() {
@@ -35,6 +40,9 @@ export default function AdminProfiles() {
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [formData, setFormData] = useState(emptyForm)
+  const [selectedProfileIds, setSelectedProfileIds] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(25)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -60,6 +68,8 @@ export default function AdminProfiles() {
       })
 
       setProfiles(data)
+      setSelectedProfileIds([])
+      setCurrentPage(1)
       setError('')
     } catch (err) {
       console.error('Profiles fetch error:', err)
@@ -78,8 +88,7 @@ export default function AdminProfiles() {
         phone: formData.phone.trim() || null,
         email: formData.email.trim() || null,
         is_verified: formData.is_verified,
-        role: formData.role,
-        emp_code: formData.emp_code.trim() || null
+        role: formData.role
       }
 
       const query = editingId
@@ -130,8 +139,7 @@ export default function AdminProfiles() {
       phone: profile.phone || '',
       email: profile.email || '',
       is_verified: profile.is_verified === true,
-      role: profile.role || 'user',
-      emp_code: profile.emp_code || ''
+      role: profile.role || 'user'
     })
     setEditingId(profile.id)
     setShowForm(true)
@@ -140,6 +148,26 @@ export default function AdminProfiles() {
   const handleLogout = () => {
     localStorage.removeItem('admin_user')
     navigate('/login')
+  }
+
+  const totalPages = Math.max(1, Math.ceil(profiles.length / itemsPerPage))
+  const paginatedProfiles = profiles.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+  const allVisibleProfilesSelected = paginatedProfiles.length > 0 && paginatedProfiles.every((profile) => selectedProfileIds.includes(profile.id))
+
+  const toggleProfileSelection = (profileId) => {
+    setSelectedProfileIds((current) => current.includes(profileId)
+      ? current.filter((id) => id !== profileId)
+      : [...current, profileId])
+  }
+
+  const toggleAllProfiles = () => {
+    const visibleProfileIds = paginatedProfiles.map((profile) => profile.id)
+    setSelectedProfileIds((current) => allVisibleProfilesSelected
+      ? current.filter((id) => !visibleProfileIds.includes(id))
+      : [...new Set([...current, ...visibleProfileIds])])
   }
 
   return (
@@ -183,9 +211,6 @@ export default function AdminProfiles() {
                   <option value="admin">Admin</option>
                 </select>
               </label>
-              <label className="text-sm font-medium text-gray-700">Employee code
-                <input value={formData.emp_code} onChange={(event) => setFormData({ ...formData, emp_code: event.target.value })} className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md" />
-              </label>
               <label className="flex items-center gap-2 mt-6 text-sm font-medium text-gray-700">
                 <input type="checkbox" checked={formData.is_verified} onChange={(event) => setFormData({ ...formData, is_verified: event.target.checked })} className="h-4 w-4" />
                 Verified
@@ -201,15 +226,27 @@ export default function AdminProfiles() {
           <button onClick={() => { setShowForm(true); setEditingId(null); setFormData(emptyForm) }} className="px-4 py-2 bg-app-accent text-white rounded-md hover:bg-opacity-90">+ Add Profile</button>
         </div>
 
+        {selectedProfileIds.length > 0 && (
+          <div className="mb-3 text-sm text-gray-600">{selectedProfileIds.length} profile{selectedProfileIds.length === 1 ? '' : 's'} selected</div>
+        )}
+
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
+                    <input
+                      type="checkbox"
+                      checked={allVisibleProfilesSelected}
+                      onChange={toggleAllProfiles}
+                      aria-label="Select all profiles"
+                      className="h-4 w-4"
+                    />
+                  </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Name</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Contact</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Role</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Employee Code</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Verified</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Added</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
@@ -220,14 +257,22 @@ export default function AdminProfiles() {
                   <tr><td colSpan="7" className="px-4 py-10 text-center text-gray-500">Loading profiles...</td></tr>
                 ) : profiles.length === 0 ? (
                   <tr><td colSpan="7" className="px-4 py-10 text-center text-gray-500">No profiles found</td></tr>
-                ) : profiles.map((profile) => {
+                ) : paginatedProfiles.map((profile) => {
                   const verified = profile.is_verified === true
                   return (
                     <tr key={profile.id} className="hover:bg-gray-50 align-top">
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          checked={selectedProfileIds.includes(profile.id)}
+                          onChange={() => toggleProfileSelection(profile.id)}
+                          aria-label={`Select ${profile.full_name || 'profile'}`}
+                          className="h-4 w-4"
+                        />
+                      </td>
                       <td className="px-4 py-3"><div className="font-medium text-gray-900">{profile.full_name || '—'}</div><div className="text-xs text-gray-500">{profile.id}</div></td>
                       <td className="px-4 py-3 text-sm text-gray-700"><div>{profile.email || '—'}</div><div>{profile.phone || '—'}</div></td>
                       <td className="px-4 py-3 text-sm text-gray-700">{profile.role || 'user'}</td>
-                      <td className="px-4 py-3 text-sm text-gray-700">{profile.emp_code || '—'}</td>
                       <td className="px-4 py-3"><button disabled={savingId === profile.id} onClick={() => toggleVerified(profile)} className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium disabled:opacity-50 ${verified ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-700'}`}><span className={`h-2 w-2 rounded-full ${verified ? 'bg-green-500' : 'bg-gray-500'}`} />{verified ? 'True' : 'False'}</button></td>
                       <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{formatCreatedAt(profile.created_at)}</td>
                       <td className="px-4 py-3"><button onClick={() => startEditing(profile)} className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">Edit</button></td>
@@ -237,6 +282,47 @@ export default function AdminProfiles() {
               </tbody>
             </table>
           </div>
+
+          {!loading && profiles.length > 0 && (
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 py-3 border-t border-gray-200 bg-gray-50">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span>Rows per page</span>
+                <select
+                  value={itemsPerPage}
+                  onChange={(event) => {
+                    setItemsPerPage(Number(event.target.value))
+                    setCurrentPage(1)
+                  }}
+                  className="px-2 py-1 border border-gray-300 rounded-md bg-white"
+                >
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600">
+                  Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, profiles.length)} of {profiles.length}
+                </span>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                  className="px-3 py-1.5 rounded-md border border-gray-300 bg-white text-sm disabled:opacity-50"
+                >
+                  Prev
+                </button>
+                <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                  className="px-3 py-1.5 rounded-md border border-gray-300 bg-white text-sm disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
